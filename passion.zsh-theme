@@ -13,7 +13,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     }
 fi
 
-
 # time
 function real_time() {
     local color="%{$fg_no_bold[cyan]%}";                    # color in PROMPT need format in %{XXX%} which is not same with echo
@@ -21,7 +20,6 @@ function real_time() {
     local color_reset="%{$reset_color%}";
     echo "${color}${time}${color_reset}";
 }
-
 
 # login_info
 function login_info() {
@@ -48,7 +46,6 @@ function login_info() {
     echo "${color}[%n@${ip}]${color_reset}";
 }
 
-
 # directory
 function directory() {
     local color="%{$fg_no_bold[cyan]%}";
@@ -57,7 +54,6 @@ function directory() {
     local color_reset="%{$reset_color%}";
     echo "${color}[${directory}]${color_reset}";
 }
-
 
 # git
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_no_bold[cyan]%}[";
@@ -72,7 +68,6 @@ function update_git_status() {
 function git_status() {
     echo "${GIT_STATUS}"
 }
-
 
 # command
 function update_command_status() {
@@ -94,7 +89,6 @@ update_command_status true;
 function command_status() {
     echo "${COMMAND_STATUS}"
 }
-
 
 # output command execute after
 output_command_execute_after() {
@@ -137,7 +131,6 @@ output_command_execute_after() {
     echo -e "";
 }
 
-
 # command execute before
 # REF: http://zsh.sourceforge.net/Doc/Release/Functions.html
 preexec() { # cspell:disable-line
@@ -166,7 +159,6 @@ current_time_millis() {
     echo $time_millis;
 }
 
-
 # command execute after
 # REF: http://zsh.sourceforge.net/Doc/Release/Functions.html
 precmd() { # cspell:disable-line
@@ -190,24 +182,8 @@ precmd() { # cspell:disable-line
     output_command_execute_after $last_cmd_result;
 }
 
-
 # set option
 setopt PROMPT_SUBST; # cspell:disable-line
-
-
-# timer
-#REF: https://stackoverflow.com/questions/26526175/zsh-menu-completion-causes-problems-after-zle-reset-prompt
-TMOUT=1;
-TRAPALRM() { # cspell:disable-line
-    # $(git_prompt_info) cost too much time which will raise stutters when inputting. so we need to disable it in this occurrence.
-    # if [ "$WIDGET" != "expand-or-complete" ] && [ "$WIDGET" != "self-insert" ] && [ "$WIDGET" != "backward-delete-char" ]; then
-    # black list will not enum it completely. even some pipe broken will appear.
-    # so we just put a white list here.
-    if [ "$WIDGET" = "" ] || [ "$WIDGET" = "accept-line" ] ; then
-        zle reset-prompt;
-    fi
-}
-
 
 # prompt
 # PROMPT='$(real_time) $(login_info) $(directory) $(git_status)$(command_status) ';
